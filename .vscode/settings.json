@@ -1,0 +1,8 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/rajat/catkin_ws_2/carto_ws/install_isolated/lib/python3/dist-packages",
+        "/home/rajat/catkin_ws_2/devel/lib/python3/dist-packages",
+        "/home/rajat/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ]
+}
