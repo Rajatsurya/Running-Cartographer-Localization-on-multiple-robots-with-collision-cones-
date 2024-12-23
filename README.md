@@ -42,18 +42,18 @@ roscore
 
 ### Terminal 2: Launch Remote Configuration for `tb3_0`
 ```bash
-ROS_NAMESPACE=tb3_0 roslaunch turtlebot3_bringup turtlebot3_remote_turtle_multi.launch
+ROS_NAMESPACE=tb3_0 roslaunch turtlebot_bringup turtlebot3_remote_turtle_multi.launch
 ```
 
 ### Terminal 3: Launch Remote Configuration for Tortoise
 ```bash
-roslaunch turtlebot3_bringup turtlebot3_remote_tortoise_config_pbstream.launch
+roslaunch turtlebot_bringup turtlebot3_remote_tortoise_config_pbstream.launch
 ```
 
 ### Terminal 4: Launch Navigation Stack
 Run the navigation stack to control all robots on the same map:
 ```bash
-roslaunch ms_jackal_demo turtle_real_two_carto.launch
+roslaunch jackal_demo turtle_real_two_carto.launch
 ```
 
 ### Terminal 5: Run Collision Cone Publisher (Real Carto)
