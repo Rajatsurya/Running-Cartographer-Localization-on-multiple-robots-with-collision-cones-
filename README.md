@@ -55,7 +55,6 @@ Run the navigation stack to control all robots on the same map:
 ```bash
 roslaunch ms_jackal_demo turtle_real_two_carto.launch
 ```
-> **Note**: This also includes the rosbridge to connect to the HoloLens. TF frames can be viewed on RViz.
 
 ### Terminal 5: Run Collision Cone Publisher (Real Carto)
 ```bash
