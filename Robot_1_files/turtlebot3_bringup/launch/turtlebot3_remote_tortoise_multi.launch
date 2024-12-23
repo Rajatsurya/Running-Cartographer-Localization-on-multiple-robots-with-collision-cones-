@@ -1,0 +1,20 @@
+<launch>
+  <arg name="multi_robot_name" default=""/>
+
+  <!--<include file="$(find turtlebot3_bringup)/launch/includes/description_turtle.launch.xml">
+  </include>-->
+
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args=" 
+    -configuration_directory $(find tortoisebot_firmware)/config 
+    -configuration_basename lidar_tb3_1.lua" 
+        output="screen">
+  </node>
+  
+  <node name="odom_publisher" pkg="tortoisebot_firmware" type="odom_pub.py" output="screen"/>
+  
+    <!--<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" value="$(arg multi_robot_name)"/>
+  </node>-->
+    
+</launch>

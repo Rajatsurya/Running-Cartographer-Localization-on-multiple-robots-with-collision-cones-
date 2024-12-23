@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+  <!--  Launch RosBridge  -->
+  <include file="$(find file_server)/launch/ros_sharp_communication.launch">
+    <arg name="port" value="9090" />
+  </include>
+
+  <arg name="use_sim_time" default="true" />
+  <arg name="gui" default="true" />
+  <arg name="headless" default="false" />
+  <arg name="move_forward_only" default="false"/>
+  <arg name="exploration" default="false"/>
+  
+  <!-- Default value for location of map config file -->
+  <arg name="map_file" default="/home/rajat/nahar_new.yaml"/>
+
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro'" />
+
+  <!-- Loads robot_description to parameter server from URDF file-->
+  <param name="robot_description" command="$(arg urdf_file)" />
+
+  <!-- Map Server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  
+  
+  
+   <group if="$(arg exploration)">
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.01" />
+  </group>
+
+
+    <include file="$(find turtlebot3_navigation)/launch/move_base_tortoise.launch">
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+   <!-- RVIZ configured for tb3_0/1 -->
+  <node pkg="rviz" type="rviz" name="rviz" required="true"
+         args="-d $(find turtlebot3_nps)/rviz/two_tb3_one_map_twogoals.rviz"/>
+
+</launch>

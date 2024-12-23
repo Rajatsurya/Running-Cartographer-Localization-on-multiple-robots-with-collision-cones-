@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- <arg name="multi_robot_name" default=""/> -->
+  <!-- <arg name="first_tb3" default="tb3_0"/> -->
+  <arg name="configuration_basename" default="turtlebot3_lds_2d_tb3_0.lua"/>
+
+  <!-- <include file="$(find turtlebot3_bringup)/launch/includes/description_turtle.launch.xml">
+  </include> -->
+
+
+ <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" 
+        args="-configuration_directory $(find turtlebot3_slam)/config
+              -configuration_basename $(arg configuration_basename)
+              -load_state_filename /home/rajat/nahar.bag.pbstream"
+        output="screen">
+        <remap from="tb3_0/imu" to="tb3_0/flat_imu"/>
+  </node>
+
+  <!-- flat_world_imu_node -->
+  <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
+    <remap from="imu_in" to="tb3_0/imu" />
+    <remap from="imu_out" to="tb3_0/flat_imu" />
+  </node>
+
+  
+ <!-- <include file="$(find turtlebot3_nps)/launch/move_base_namespace_imu_tb3_0.launch">
+    <arg name="robot_namespace" value="tb3_0"/>
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+   </include> -->    
+</launch>

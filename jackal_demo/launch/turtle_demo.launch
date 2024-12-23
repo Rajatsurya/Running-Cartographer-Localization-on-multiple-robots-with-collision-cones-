@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+    <arg name="move_forward_only" default="false"/>
+	<!--  Launch RosBridge  -->
+	<include file="$(find file_server)/launch/ros_sharp_communication.launch">
+		<arg name="port" value="9090" />
+	</include>
+
+	<!--  Write URDF to parameter server  -->
+	<arg name="urdf_file" default="$(find xacro)/xacro '$(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro'" />
+	<param name="robot/name" value="Turtlebot3_Burger" />
+	<param name="robot_description" command="$(arg urdf_file)" />
+
+	<arg name="use_sim_time" default="true" />
+	<arg name="gui" default="true" />
+	<arg name="headless" default="false" />
+	<arg name="world_name" default="$(find ms_jackal_demo)/worlds/empty.world" />
+
+	
+
+	<!-- Optionally enable teleop for the simulation -->
+	<arg name="joystick" default="true" />
+
+	<!--  move base -->
+	<include file="$(find jackal_navigation)/launch/odom_navigation_demo_turtle.launch">
+	<arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+	<!--  Start gazebo  -->
+	<include file="$(find ms_jackal_demo)/launch/turtle_custom_empty_world.launch" pass_all_args="true">
+		<arg name="x" value="0" />
+		<arg name="y" value="0" />
+		<arg name="z" value="0.0" />
+		<arg name="yaw" value="0" />
+		<arg name="joystick" value="$(arg joystick)" />
+	</include>
+</launch>

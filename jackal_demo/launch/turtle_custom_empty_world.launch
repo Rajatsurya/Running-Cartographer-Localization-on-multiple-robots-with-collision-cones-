@@ -1,0 +1,41 @@
+<!--
+    
+    Microsoft IROS Demo 2 launch file
+    Author: Eric Vollenweider
+
+-->
+
+<launch>
+  <arg name="use_sim_time" default="true" />
+  <arg name="gui" default="true" />
+  <arg name="headless" default="false" />
+  <arg name="world_name" default="$(find ms_jackal_demo)/worlds/empty.world" />
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+
+
+
+  <!-- Optionally enable teleop for the simulation -->
+  <arg name="joystick" default="true" />
+
+  <!-- Launch Gazebo with the specified world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="0" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="headless" value="$(arg headless)" />
+    <arg name="world_name" value="$(arg world_name)" />
+  </include>
+
+  <!-- Load turtlebot_3 description, controllers, and teleop nodes. -->
+
+   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+  <!-- Spawn turtle -->
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"  args="-urdf -model turtlebot3_$(arg model) -x $(arg x) -y $(arg y) -z $(arg z) -param robot_description" />
+</launch>
