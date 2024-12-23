@@ -1,0 +1,13 @@
+<launch>
+  <arg name="multi_robot_name" default=""/>
+
+  <include file="$(find turtlebot3_bringup)/launch/includes/description_tortoise.launch.xml">
+  </include>
+
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args=" 
+    -configuration_directory $(find tortoisebot_firmware)/config 
+    -configuration_basename lidar.lua" 
+        output="screen">
+  </node>
+  <node name="odom_publisher" pkg="tortoisebot_firmware" type="odom_pub.py" output="screen"/>
+</launch>

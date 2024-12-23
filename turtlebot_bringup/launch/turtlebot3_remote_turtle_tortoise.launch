@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="configuration_basename" default="turtlebot3_lds_2d_tortoise.lua"/>
+
+  <!-- <arg name="multi_robot_name" default=""/> -->
+
+  <!-- <include file="$(find turtlebot3_bringup)/launch/includes/description_turtle.launch.xml">
+  </include> -->
+
+  <!-- cartographer_node -->
+  <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" 
+        args="-configuration_directory $(find turtlebot3_slam)/config
+              -configuration_basename $(arg configuration_basename)"
+        output="screen">
+        <remap from="/imu" to="/flat_imu"/>
+  </node>
+
+   <!-- flat_world_imu_node -->
+  <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
+    <remap from="imu_in" to="/imu" />
+    <remap from="imu_out" to="/flat_imu" />
+  </node>
+
+  <!-- move_base (uncomment this) -->
+  <!-- <include file="$(find turtlebot3_navigation)/launch/move_base_imu.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+ -->
+
+  <!-- <node name="odom_publisher" pkg="tortoisebot_firmware" type="odom_pub_turtle.py" output="screen"/> -->
+
+   <!-- flat_world_imu_node -->
+ <!--  <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
+    <remap from="imu_in" to="/imu" />
+    <remap from="imu_out" to="/flat_imu" />
+  </node> -->
+
+   <!--  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" value="$(arg multi_robot_name)"/>
+  </node> -->
+    
+</launch>
